@@ -16,7 +16,7 @@ function createWindow() {
     })
 }
 
-app.on('ready'. createWindow)
+app.on('ready', createWindow)
 
 app.on('window-all-closed', function() {
     // On OS X it is common for applications and their menu bar
