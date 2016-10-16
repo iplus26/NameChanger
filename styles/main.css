@@ -11,6 +11,7 @@ tr.selected,
 .rules-container {
     display: flex;
     padding: 10px;
+    background: #ECECEC;
     border-bottom: 1px #ccc solid;
 }
 
