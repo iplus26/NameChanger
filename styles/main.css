@@ -2,6 +2,10 @@
     Author: Ivan Jiang
     Based on Photon CSS
  */
+.table-striped tr {
+    transition: .3 ease-in-out background-color;
+}
+
 tr.selected,
 .table-striped tr.selected:nth-child(even) {
   color: #fff;
@@ -30,4 +34,8 @@ tr.selected,
 
 .btn-large > .icon:before {
     transform: scale(1.5);
+}
+
+#right_panel tbody {
+    opacity: .7;
 }
