@@ -1,0 +1,32 @@
+/*
+    Author: Ivan Jiang
+    Based on Photon CSS
+ */
+tr.selected,
+.table-striped tr.selected:nth-child(even) {
+  color: #fff;
+  background-color: #116cd6;
+}
+
+.rules-container {
+    display: flex;
+    padding: 10px;
+    border-bottom: 1px #ccc solid;
+}
+
+.rules-container > .form-control {
+    display: flex;
+    flex: 1;
+    width: auto; /* Override Photon CSS */ 
+    margin-left: 10px;
+    box-shadow: none;
+    cursor: auto;
+}
+
+.rules-container > .form-control:first-child {
+    margin-left: 0;
+}
+
+.btn-large > .icon:before {
+    transform: scale(1.5);
+}
