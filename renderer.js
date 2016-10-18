@@ -1,1 +1,1 @@
-require('./scripts/actionPanel')
+require('./scripts/actionManager')
