@@ -1,9 +1,7 @@
 let Utils = require('./utils')
 
-/**
- * TODO: Provide getter and setter methods separately. 
- *
- */
+//  File Cache -----------------------------------------------------------
+// 
 let _cache = (function() {
     let pathCache = {};
     window._cache = pathCache // for dev
@@ -37,6 +35,9 @@ let _cache = (function() {
     return ret;
 })();
 
+//  Element Cache -----------------------------------------------------------
+//  Mapping for element-id -> file
+// 
 let _elementCache = (function() {
     let elementCache = {};
     window._elementCache = elementCache // for dev
@@ -57,12 +58,14 @@ let _File = function(split) {
     return this
 };
 
+
+//  File ---------------------------------------------------------------------
+// 
 let File = function(path) {
     return _cache(path, _File);
 };
 
 File.getElementByFile = function(file, flag) {
-    // console.log('getElementByFile: ' + file[flag + 'Element'])
     return file[flag + 'Element']
 }
 
