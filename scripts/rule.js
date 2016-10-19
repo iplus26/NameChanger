@@ -19,7 +19,6 @@ select.innerHTML = config.map(el => `<option>${ el.value }</option>`).join('')
 
 select.addEventListener('change', function(e) {
     let rule = e.target.value;
-    console.log(rule)
 
     for (let i = 0; i < config.length; i++) 
         if (rule === config[i]) {

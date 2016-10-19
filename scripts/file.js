@@ -43,7 +43,8 @@ let _elementCache = (function() {
     window._elementCache = elementCache // for dev
     let ret = function(ele, file) {
         let id = Utils.uniqueId(ele)
-        return elementCache[id] = elementCache[id] || file
+        // console.log(ele, id)
+        return elementCache[id] = file || elementCache[id]
     }
     ret.remove = function(ele) {
         delete elementCache[Utils.uniqueId(ele)]
@@ -88,6 +89,13 @@ File.removeElement = function(ele) {
 
     // remove from dom
     ele.remove()
+}
+
+File.updateElement = function(ele, new_file) {
+    let file = this.getFileByElement(ele)
+    _cache.remove(file)
+
+    _elementCache(ele, new_file)
 }
 
 module.exports = File;

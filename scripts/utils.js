@@ -8,16 +8,17 @@ let Utils = {
 };
 
 Utils.uniqueId = (function() {
-    let counter = -1;
-    return function(node) {
-        if (node !== undefined) {
+    let counter = 0;
+    return function (node) {
+        let id = node.getAttribute('tr-id');
+        if (!id) {
             counter++;
             node.setAttribute('tr-id', counter);
-            return counter;
+            return counter + '';
         } else {
-            return node.getAttribute('tr-id');
+            return id;
         }
-    };
+    }
 })();
 
 function hasClass(node, name) {

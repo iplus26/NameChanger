@@ -1,3 +1,2 @@
-require('./scripts/actionManager')
-
+require('./scripts/btns')
 require('./scripts/rule')
