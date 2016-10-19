@@ -5,6 +5,19 @@ let Utils = {
     addClass: addClass,
     removeClass: removeClass,
     toggleClass: toggleClass,
+    uniqueId: (function() {
+            let counter = -1;
+            return function(node) {
+                if (node !== undefined) {
+                    counter++;
+                    node.setAttribute('tr-id', counter)
+                    return counter
+                } else {
+                    return node.getAttribute('tr-id')
+                }
+                
+            }
+        })
 };
 
 function hasClass(node, name) {

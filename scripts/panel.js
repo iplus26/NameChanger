@@ -1,23 +1,15 @@
-let File = require('./file')
+let File = require('./file'),
+    P; 
 
-/**
- * @constructor
- *
- * @private
- *
- */
+//  Panel ---------------------------------------------------------------------
+// 
 let Panel = function(node, flag) {
     this.element = node;
     this.list = node.querySelector('tbody');
     this.flag = flag;
-
-    let sel = this;
 };
 
 Panel.prototype = {
-    // addFile: function(file) {
-    //     this.list.innerHTML += `<tr><td>${ file.name }</td></tr>`;
-    // },
     addFiles: function(files) {
         let sel = this;
 
@@ -33,11 +25,8 @@ Panel.prototype = {
                 sel.list.appendChild(tr)
             })
     },
-    removeSelectedFiles: function() {
-        Array.from(this.list.querySelectorAll('.selected')).remove();
-    },
     removeAllFiles: function() {
-        this.list.innerHTML = ''
+        _removeFiles(this.list.querySelectorAll('tr'))
     },
     events: function(callback) {
         callback && callback(this.element, this.list)
@@ -45,28 +34,49 @@ Panel.prototype = {
 };
 
 
-/**
- * @constructor
- *
- */
+//  PanelManager ---------------------------------------------------------------------
+//  User manipulates the left panel. Panel manager updates the right panel.
+//
 let PanelManager = function() {
     this._leftPanel  = new Panel(document.querySelector('#left_panel'), '_left');
     this._rightPanel = new Panel(document.querySelector('#right_panel'), '_right');
     this.panels = [this._leftPanel, this._rightPanel];
 };
 
+P = PanelManager.prototype;
 
-/** 
- * User manipulates the left panel. Panel manager updates the right panel.
- *
- */
-Object.keys(Panel.prototype).forEach(function(method) {
-    PanelManager.prototype[method] = function() {
+['addFiles', 'removeAllFiles'].forEach(function(method) {
+    P[method] = function() {
         let args = arguments;
         this.panels.forEach(function(panel) {
             panel[method].call(panel, ...args);
         });
     };
 });
+
+P.removeSelectedFiles = function() {
+    let leftSelectedNodes = Array.from(this._leftPanel.list.querySelectorAll('.selected'))
+
+    let parent = this._leftPanel.list,
+        child  = Array.from(parent.children);
+    let numbers = leftSelectedNodes.map(el => child.indexOf(el))
+
+    let rightNodeList = this._rightPanel.list.querySelectorAll('tr')
+    let rightSelectedNodes = Array.from(rightNodeList).filter((el, i) => numbers.includes(i))
+
+    _removeFiles(leftSelectedNodes.concat(rightSelectedNodes))
+}
+
+P.events = function() {
+    this._leftPanel.events.call(this._leftPanel, ...arguments)
+}
+
+function _removeFiles(nodelist) {
+    let arr = Array.from(nodelist)
+
+    arr.forEach(function(node) {
+        File.removeElement(node)
+    })
+}
 
 module.exports = PanelManager;
