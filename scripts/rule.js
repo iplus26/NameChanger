@@ -12,7 +12,7 @@ let config = [{
     wrapper: (filename) => filename.replace(old_str.value, new_str.value)
 }, {
     value: 'URL-Decode the file names',
-    wrapper: (filename) => encodeURIComponent(filename)
+    wrapper: (filename) => decodeURIComponent(filename)
 }];
 
 select.innerHTML = config.map(el => `<option>${ el.value }</option>`).join('')
@@ -21,9 +21,9 @@ select.addEventListener('change', function(e) {
     let rule = e.target.value;
 
     for (let i = 0; i < config.length; i++) 
-        if (rule === config[i]) {
+        if (rule === config[i].value) {
             current = i;
-            return;
+            break;
         }
 
     globals.panel.updateByRule(config[current].wrapper)
