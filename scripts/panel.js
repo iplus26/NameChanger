@@ -1,16 +1,17 @@
+let File = require('./file')
+
 /**
  * @constructor
  *
  * @private
  *
  */
-let Panel = function(node) {
+let Panel = function(node, flag) {
     this.element = node;
     this.list = node.querySelector('tbody');
+    this.flag = flag;
 
     let sel = this;
-
-    
 };
 
 Panel.prototype = {
@@ -18,7 +19,19 @@ Panel.prototype = {
     //     this.list.innerHTML += `<tr><td>${ file.name }</td></tr>`;
     // },
     addFiles: function(files) {
-        this.list.innerHTML += files.map((file) => `<tr><td>${ file.name }</td></tr>`).join('');
+        let sel = this;
+
+        files
+            .filter((file) => !File.getElementByFile(file, sel.flag))
+            .forEach(function(file) {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `<td>${ file.name }</td>`;
+                
+                File.linkElementWithFile(tr, file, sel.flag)
+
+                // Append element to list
+                sel.list.appendChild(tr)
+            })
     },
     removeSelectedFiles: function() {
         Array.from(this.list.querySelectorAll('.selected')).remove();
@@ -37,8 +50,8 @@ Panel.prototype = {
  *
  */
 let PanelManager = function() {
-    this._leftPanel  = new Panel(document.querySelector('#left_panel'));
-    this._rightPanel = new Panel(document.querySelector('#right_panel'));
+    this._leftPanel  = new Panel(document.querySelector('#left_panel'), '_left');
+    this._rightPanel = new Panel(document.querySelector('#right_panel'), '_right');
     this.panels = [this._leftPanel, this._rightPanel];
 };
 
