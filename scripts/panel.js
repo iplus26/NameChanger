@@ -1,5 +1,5 @@
 let File = require('./file'),
-    P; 
+    P;
 
 //  Panel ---------------------------------------------------------------------
 // 
@@ -29,7 +29,7 @@ Panel.prototype = {
         _removeFiles(this.list.querySelectorAll('tr'))
     },
     events: function(callback) {
-        callback && callback(this.element, this.list)
+        callback && callback(this.element)
     }
 };
 
@@ -69,6 +69,14 @@ P.removeSelectedFiles = function() {
 
 P.events = function() {
     this._leftPanel.events.call(this._leftPanel, ...arguments)
+}
+
+P.updateByRule = function(wrap) {
+    console.log(wrap)
+
+    let right = this._rightPanel.list.querySelectorAll('tr');
+    let left = this._leftPanel.list.querySelectorAll('tr');
+    Array.from(right).forEach((el, i) => el.innerHTML = wrap(left[i].innerHTML))
 }
 
 function _removeFiles(nodelist) {

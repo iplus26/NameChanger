@@ -2,10 +2,6 @@
     Author: Ivan Jiang
     Based on Photon CSS
  */
-.table-striped tr {
-    transition: .3 ease-in-out background-color;
-}
-
 tr.selected,
 .table-striped tr.selected:nth-child(even) {
   color: #fff;

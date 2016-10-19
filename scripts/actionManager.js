@@ -4,11 +4,11 @@ let app = require('electron').remote,
 
 // Dep
 let // fs = require('fs'),
-    Panel = require('./panel'),
+    globals = require('./globals'),
     File = require('./file'),
     _ = require('./utils');
 
-let panel = new Panel
+let panel = globals.panel
 
 // Node referrences
 let doc = document,
@@ -39,13 +39,13 @@ clearFilesBtn.addEventListener('click', function() {
     panel.removeAllFiles();
 });
 
-panel.events(function(node, list) {
+panel.events(function(node) {
     node.addEventListener('click', function(e) {
         let td = e.target, tr;
-        let select = Array.from(list.querySelectorAll('.selected'));
+        let select = Array.from(node.querySelectorAll('.selected'));
         select.forEach((el) => _.removeClass(el, 'selected'));
 
-        if (td && td.tagName === 'TD') {
+        if (td && td.tagName.toUpperCase() === 'TD') {
             tr = td.parentNode;
             _.addClass(tr, 'selected');
         }
